@@ -72,6 +72,9 @@ public class HomePage extends BasePage {
         String amountOfItems = countOfItemsInCart.getText();
         return amountOfItems;
     }
+    public WebElement getCellPhoneLink(){
+        return cellPhonesButton;
+    }
 
     public void clickChangeLanguageButton() {
         changeLanguageButton.click();

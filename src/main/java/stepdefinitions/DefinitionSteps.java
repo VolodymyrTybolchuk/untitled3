@@ -80,11 +80,11 @@ public class DefinitionSteps {
     @And("User choose *electronic* class items")
     public void userChooseElectronicClassItems() {
         homePage.clickElectronicsButton();
-        homePage.waitForAjaxToComplete(DEFAULT_TIME);
     }
 
     @And("User choose *cell phones and accessories*")
     public void userChooseCellPhonesAndAccessories() {
+        homePage.waitVisibilityOfElement(DEFAULT_TIME,homePage.getCellPhoneLink());
         homePage.clickCellPhonesButton();
     }
 
