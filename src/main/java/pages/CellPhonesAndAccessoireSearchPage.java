@@ -32,10 +32,11 @@ public class CellPhonesAndAccessoireSearchPage extends BasePage {
         super(driver);
     }
 
-    public List<WebElement> getListOfElementsDeclaredOnThePage(){
+    public List<WebElement> getListOfElementsDeclaredOnThePage() {
 
         return listOfElementsDeclaredOnThePage;
     }
+
     public void clickCellPhonesLink() {
         cellPhonesLink.click();
     }
@@ -43,18 +44,21 @@ public class CellPhonesAndAccessoireSearchPage extends BasePage {
     public void clickUnder25DollarsButton() {
         under25DollarsFilterButton.click();
     }
+
     public void clickOnTheFirstPhoneLink() {
         phoneLink.click();
     }
 
-    public void sendKeysToFilters(final String keyword){
+    public void sendKeysToFilters(final String keyword) {
         lowPriceFilter.sendKeys(keyword);
         highPriceFilter.sendKeys(keyword);
     }
-    public void clickGoButton(){
+
+    public void clickGoButton() {
         goButton.click();
     }
-    public List<WebElement> getListOfPrices(){
+
+    public List<WebElement> getListOfPrices() {
         return listOfPrices;
     }
 }

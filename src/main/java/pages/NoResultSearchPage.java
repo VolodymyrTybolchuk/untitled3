@@ -14,20 +14,18 @@ public class NoResultSearchPage extends BasePage {
         super(driver);
     }
 
-    public void checkVisibilityOfNoResultMessage() {
-        noResultMessage.isDisplayed();
-    }
+//    public void checkVisibilityOfNoResultMessage() {
+//        noResultMessage.isDisplayed();
+//    }
 
     public String getConfirmationOfNoResultMessage() {
-        String Result = "There are some result!";
-        if (noResultMessage.getText().contains("No results")) {
-            return Result = "No results";
-        } else
-            return Result;
+        String textResult = noResultMessage.getText();
+            return textResult;
 
     }
-    public String getResultMessageIfInputMoreThanMaxPriceAvailable(){
-        String resultMessage= resultMessageIfInputMoreThanMaxPriceAvailable.getText();
+
+    public String getResultMessageIfInputMoreThanMaxPriceAvailable() {
+        String resultMessage = resultMessageIfInputMoreThanMaxPriceAvailable.getText();
         return resultMessage;
     }
 }

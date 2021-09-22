@@ -12,7 +12,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import pages.*;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 import static org.junit.Assert.assertEquals;
@@ -28,6 +27,7 @@ public class DefinitionSteps {
     NoResultSearchPage noResultSearchPage;
     PhonePage phonePage;
     SearchPage searchPage;
+    CurrentPage currentPage;
     private static final long DEFAULT_TIME = 120;
 
     @Before
@@ -67,8 +67,7 @@ public class DefinitionSteps {
     public void userChecksThatThereIsNoSearchResult(final String expectedNoSearchResult) {
         noResultSearchPage = pageFactoryManager.getNoResultSearchPage();
         noResultSearchPage.waitForPageLoadComplete(DEFAULT_TIME);
-        noResultSearchPage.checkVisibilityOfNoResultMessage();
-        assertEquals(noResultSearchPage.getConfirmationOfNoResultMessage(), expectedNoSearchResult);
+        assertTrue(noResultSearchPage.getConfirmationOfNoResultMessage().contains(expectedNoSearchResult));
     }
 
     @And("User clicks *all* button")
@@ -80,17 +79,13 @@ public class DefinitionSteps {
 
     @And("User choose *electronic* class items")
     public void userChooseElectronicClassItems() {
-        homePage.implicitWait(DEFAULT_TIME);
         homePage.clickElectronicsButton();
-        homePage.implicitWait(DEFAULT_TIME);
-        homePage.waitForPageLoadComplete(DEFAULT_TIME);
+        homePage.waitForAjaxToComplete(DEFAULT_TIME);
     }
 
     @And("User choose *cell phones and accessories*")
     public void userChooseCellPhonesAndAccessories() {
-        homePage.implicitWait(DEFAULT_TIME);
         homePage.clickCellPhonesButton();
-        homePage.implicitWait(DEFAULT_TIME);
     }
 
     @And("User clicks *cell phones* filter")
@@ -116,11 +111,6 @@ public class DefinitionSteps {
     @Then("User checks {string} in cart")
     public void userChecksAmountOfItemsInCart(final String expectedAmountOfItems) {
         assertEquals(homePage.getAmountOfItemsInCart(), expectedAmountOfItems);
-    }
-
-    @After
-    public void tearDown() {
-        driver.close();
     }
 
     @And("User clicks sign-in link")
@@ -166,9 +156,9 @@ public class DefinitionSteps {
     }
 
     @Then("User checks {string}")
-    public void userChecksExpectedValueOfPrice(final String expectedPriceValue) {
+    public void userChecksExpectedValueOfPrice(final String expectedValue) {
         phonePage.waitForPageLoadComplete(DEFAULT_TIME);
-        assertEquals(phonePage.getPriceValue(), expectedPriceValue);
+        assertTrue(phonePage.getPriceValue().contains(expectedValue));
     }
 
     @And("User checks visibility of *currency format change* button")
@@ -184,6 +174,7 @@ public class DefinitionSteps {
     @And("User checks visibility of *cell phones and accessories*")
     public void userChecksVisibilityOfCellPhonesAndAccessories() {
         homePage.visibilityOfCellPhonesButton();
+        assertTrue(homePage.visibilityOfCellPhonesButton());
     }
 
     @Then("User checks amount of {string}")
@@ -237,5 +228,27 @@ public class DefinitionSteps {
         cellPhonesAndAccessoireSearchPage = pageFactoryManager.getCellPhonesAndAccessoireSearchPage();
         cellPhonesAndAccessoireSearchPage.waitForPageLoadComplete(DEFAULT_TIME);
         cellPhonesAndAccessoireSearchPage.clickUnder25DollarsButton();
+    }
+
+    @When("User clicks *home* button")
+    public void userClicksHomeButton() {
+        currentPage = pageFactoryManager.getCurrentPage();
+        currentPage.waitForPageLoadComplete(DEFAULT_TIME);
+        currentPage.homeButtonClick();
+    }
+
+    @Then("User checks that page is {string}")
+    public void userChecksThatPageIsExpectedHomePage(final String expectedHomePage) {
+        assertEquals(driver.getCurrentUrl(), expectedHomePage);
+    }
+
+    @And("User clicks on the *language settings* button")
+    public void userClicksOnTheLanguageSettingsButton() {
+        homePage.clickChangeLanguageButton();
+    }
+
+    @After
+    public void tearDown() {
+        driver.close();
     }
 }

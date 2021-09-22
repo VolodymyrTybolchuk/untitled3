@@ -64,7 +64,7 @@ Feature: Smoke
 
     Examples:
       | homePage                | expectedValueOfPrice |
-      | https://www.amazon.com/ | RUB 90,938.11        |
+      | https://www.amazon.com/ | RUB                  |
 
   Scenario Outline: Check amount of elements declared on the page
     Given User opens '<homePage>'
@@ -123,3 +123,26 @@ Feature: Smoke
     Examples:
       | homePage                | boundOfPrice |
       | https://www.amazon.com/ | 25           |
+
+  Scenario Outline: Check correctness of label button
+    Given User opens '<homePage>'
+    And User clicks *all* button
+    And User checks visibility of *electronic* class items
+    And User choose *electronic* class items
+    And User checks visibility of *cell phones and accessories*
+    And User choose *cell phones and accessories*
+    When User clicks *home* button
+    Then User checks that page is '<expectedHomePage>'
+    Given User opens '<homePage>'
+    And User clicks on the *language settings* button
+    When User clicks *home* button
+    Then User checks that page is '<expectedHomePage>'
+    Given User opens '<homePage>'
+    And User makes search by '<keyword>'
+    And User clicks search button
+    When User clicks *home* button
+    Then User checks that page is '<expectedHomePage>'
+
+    Examples:
+      | homePage                | keyword | expectedHomePage                    |
+      | https://www.amazon.com/ | stuff   | https://www.amazon.com/ref=nav_logo |

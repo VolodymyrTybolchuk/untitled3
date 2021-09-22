@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import pages.*;
 
 public class PageFactoryManager {
+
     WebDriver driver;
 
     public PageFactoryManager(WebDriver driver) {
@@ -36,5 +37,9 @@ public class PageFactoryManager {
 
     public SearchPage getSearchPage() {
         return new SearchPage(driver);
+    }
+
+    public CurrentPage getCurrentPage() {
+        return new CurrentPage(driver);
     }
 }
